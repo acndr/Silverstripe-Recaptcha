@@ -91,7 +91,7 @@ class RecaptchaField extends FormField
         $recaptcha_response = $this->value();
 
         if(!$recaptcha_response){
-            $this->getForm()->sessionMessage('Der skete en fejl - Prøv venligst igen', 'bad');
+            $this->getForm()->sessionMessage('There was an error, please try again.', 'bad');
             return false;
         }
 
@@ -100,13 +100,13 @@ class RecaptchaField extends FormField
         $recaptcha = json_decode($recaptcha);
 
         if(!isset($recaptcha->score)){
-            $validator->validationError($this->name, 'Der skete en fejl - Prøv venligst igen');
+            $validator->validationError($this->name, 'There was an error, please try again.');
             return false;
         }
 
         // Take action based on the score returned:
         if ($recaptcha->score < $this->getSpamLevel()) {
-            $validator->validationError($this->name, 'reCaptcha vurdere at beskeden er spam');
+            $validator->validationError($this->name, 'reCaptcha considers this submission to be spam.');
             return false;
         }
 
